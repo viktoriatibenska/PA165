@@ -10,7 +10,7 @@ import cz.fi.muni.carshop.enums.CarTypes;
 public class CarShopStorage {
 
 	private static CarShopStorage instance;
-	private Map<CarTypes, List<Car>> cars = new HashMap<>();
+	private final Map<CarTypes, List<Car>> cars = new HashMap<>();
 
 	public static CarShopStorage getInstancce() {
 		if (instance == null) {
