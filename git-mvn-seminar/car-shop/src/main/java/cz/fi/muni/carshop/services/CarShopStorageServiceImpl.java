@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import cz.fi.muni.carshop.CarShopStorage;
 import cz.fi.muni.carshop.entities.Car;
 import cz.fi.muni.carshop.enums.CarTypes;
+import cz.fi.muni.carshop.exceptions.RequestedCarNotFoundException;
 
 public class CarShopStorageServiceImpl implements CarShopStorageService {
 
@@ -36,5 +37,18 @@ public class CarShopStorageServiceImpl implements CarShopStorageService {
                     throw new IllegalArgumentException("Car price can not be negative!");
                 }
 	}
+
+        @Override
+        public void sellCar(Car car) throws RequestedCarNotFoundException {
+                Map<CarTypes, List<Car>> allCars = CarShopStorage.getInstancce().getCars();
+                List<Car> carsOfSameType = allCars.get(car.getType());
+
+                if (carsOfSameType.size() > 0){
+                    CarShopStorage.getInstancce().getCars().remove(car.getType());
+                } else {
+                    throw new RequestedCarNotFoundException("Specified car not found!");
+                }
+
+        }
 
 }
