@@ -29,8 +29,12 @@ public class CarShopStorageServiceImpl implements CarShopStorageService {
 	}
 
 	@Override
-	public void addCarToStorage(Car car) {
-		CarShopStorage.getInstancce().getCars().computeIfAbsent(car.getType(), x -> new ArrayList<>()).add(car);
+	public void addCarToStorage(Car car) throws IllegalArgumentException {
+                if (car.getPrice() >= 0) {
+                    CarShopStorage.getInstancce().getCars().computeIfAbsent(car.getType(), x -> new ArrayList<>()).add(car);
+                } else {
+                    throw new IllegalArgumentException("Car price can not be negative!");
+                }
 	}
 
 }
